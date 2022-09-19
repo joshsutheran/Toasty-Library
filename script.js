@@ -1,7 +1,8 @@
-import Toast from './toast.js'
+import Toast from "./toast.js";
 
-const toast = new Toast ({
-    position: 'top-right',
+document.querySelector("button").addEventListener("click", () => {
+  const toast = new Toast({
     text: "hello!",
-    autoClose: false
-})
+    position: "top-right",
+  });
+});

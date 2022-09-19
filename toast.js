@@ -1,33 +1,55 @@
+let root = document.documentElement
+
 // Create exported class called Toast.
+const DEFAULT_OPTIONS = {
+    autoClose: 5000,
+    position: 'top-right',
+    onClose: () => {},
+    canClose: true,
+    showProgress: true,
+    type: 'success'
+}
+
 export default class Toast {
-    // Define private toastEl.
     #toastEl
+    #removeBinded
+    #progressInterval
+    #visibleSince
+    #autoClose
 
   constructor(options) {
-      // Create toast element
       this.#toastEl = document.createElement("div")
-      // Add classlist.
       this.#toastEl.classList.add("toast")
-      // Loop through arguments given, assign KVPs as necessary
-      Object.entries(options).forEach(([key, value]) => {
-          this[key] = value
+      this.#visibleSince = new Date()
+      requestAnimationFrame(() => {
+          this.#toastEl.classList.add('show')
       })
+      this.#removeBinded = this.remove.bind(this)
+      this.update({...DEFAULT_OPTIONS, ...options})
   }
+
+  set type(value) {
+    if (!value || value === 'success') {
+      this.#toastEl.classList.add('successful__toast')
+      root.style.setProperty("--progress__color", "#226e35")
+    }
+} 
   
   // Define time to close - if false, do not close.
   set autoClose(value) {
+      this.#autoClose = value
       if(value === false) return
       setTimeout(() => this.remove(), value)
   }
 
   // Define screen position - options: top-right, top-center, top-left, bottom-left, bottom-center, bottom-right.
   set position (value) {
-      // Define selector
-      const selector = `.toast-selector[data-position=${value}]`
-      // If exist, assign to container, else create new container.
-      const container = document.querySelector(selector) || createContainer(value)
-      // append our toast div
-      container.append(this.#toastEl)
+    const currentContainer = this.#toastEl.parentElement
+    const selector = `.toast-container[data-position="${value}"]`
+    const container = document.querySelector(selector) || createContainer(value)
+    container.append(this.#toastEl)
+    if (currentContainer == null || currentContainer.hasChildNodes()) return
+    currentContainer.remove()
   }
 
   // Set the text message
@@ -35,31 +57,52 @@ export default class Toast {
       this.#toastEl.textContent = value
   }
 
-  update() {}
+  set canClose(value) {
+      this.#toastEl.classList.toggle("can-close", value)
+      if (value) {
+        this.#toastEl.addEventListener('click', this.#removeBinded)
+      } else {
+        this.#toastEl.removeEventListener('click', this.#removeBinded)
+      }
+  }
+
+  set showProgress(value) {
+      this.#toastEl.classList.toggle("progress", value)
+      this.#toastEl.style.setProperty("--progress", 1)
+
+      if(value) {
+          this.#progressInterval = setInterval(() => {
+              const timeVisible = new Date() - this.#visibleSince
+              this.#toastEl.style.setProperty("--progress", 1 - timeVisible / this.#autoClose)
+          }, 10)
+      }
+  }
+
+  update(options) {
+    Object.entries(options).forEach(([key, value]) => {
+        this[key] = value
+    })
+  }
 
   // Remove the entire container - not just toast div.
   remove() {
-      // Assign container 
+    clearInterval(this.#progressInterval)
     const container = this.#toastEl.parentElement
-    // Remove toast el
-      this.#toastEl.remove()
-      // If container has toast el - don't remove
-      if ((container.hasChildNodes)) return
-      // else remove.
-      container.remove()
+    this.#toastEl.classList.remove("show")
+    this.#toastEl.addEventListener("transitionend", () => {
+        this.#toastEl.remove()
+        if ((container.hasChildNodes())) return
+        container.remove()
+    })
+    this.onClose()
   }
 }
 
 // Create a container to hold toast div.
 function createContainer (position) {
-    // Create div
     const container = document.createElement("div")
-    // add custom class
     container.classList.add("toast-container")
-    // define dataset position
     container.dataset.position = position
-    // Append to container
     document.body.append(container)
-    // return constructed container
     return container
 }
