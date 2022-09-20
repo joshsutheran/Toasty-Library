@@ -2,12 +2,12 @@ let root = document.documentElement
 
 // Create exported class called Toast.
 const DEFAULT_OPTIONS = {
-    autoClose: 5000,
+    autoClose: 500000,
     position: 'top-right',
     onClose: () => {},
     canClose: true,
     showProgress: true,
-    type: 'success'
+    type: 'information'
 }
 
 export default class Toast {
@@ -16,6 +16,9 @@ export default class Toast {
     #progressInterval
     #visibleSince
     #autoClose
+    #toastTextEl
+    #toastIconEl
+    #toastIconImgEl
 
   constructor(options) {
       this.#toastEl = document.createElement("div")
@@ -31,7 +34,16 @@ export default class Toast {
   set type(value) {
     if (!value || value === 'success') {
       this.#toastEl.classList.add('successful__toast')
-      root.style.setProperty("--progress__color", "#226e35")
+      root.style.setProperty("--progress__color", "#3cba5f")
+    } else if (!value || value === 'information') {
+      this.#toastEl.classList.add('information__toast')
+      root.style.setProperty("--progress__color", "#006be1")
+    } else if (!value || value === 'warning') {
+      this.#toastEl.classList.add('warning__toast')
+      root.style.setProperty("--progress__color", "#ef9400")
+    } else if (!value || value === 'error') {
+      this.#toastEl.classList.add('error__toast')
+      root.style.setProperty("--progress__color", "#ea4e2c")
     }
 } 
   
@@ -52,9 +64,21 @@ export default class Toast {
     currentContainer.remove()
   }
 
-  // Set the text message
+  // Set the text and icon values
   set text(value) {
-      this.#toastEl.textContent = value
+    this.#toastIconEl = document.createElement('div')
+    this.#toastIconEl.classList.add('toast__iconEl')
+    this.#toastTextEl = document.createElement('div')
+    this.#toastTextEl.classList.add('toast__textEl')
+
+    this.#toastEl.append(this.#toastIconEl, this.#toastTextEl)
+
+    this.#toastIconImgEl = document.createElement('div')
+    this.#toastIconImgEl.classList.add('toast_iconel_img')
+
+    this.#toastIconEl.append(this.#toastIconImgEl)
+
+    this.#toastTextEl.textContent = value
   }
 
   set canClose(value) {
@@ -69,7 +93,6 @@ export default class Toast {
   set showProgress(value) {
       this.#toastEl.classList.toggle("progress", value)
       this.#toastEl.style.setProperty("--progress", 1)
-
       if(value) {
           this.#progressInterval = setInterval(() => {
               const timeVisible = new Date() - this.#visibleSince
