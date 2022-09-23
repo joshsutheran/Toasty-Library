@@ -7,7 +7,7 @@ const DEFAULT_OPTIONS = {
     onClose: () => {},
     canClose: true,
     showProgress: true,
-    type: 'information'
+    type: 'error'
 }
 
 export default class Toast {
@@ -18,7 +18,10 @@ export default class Toast {
     #autoClose
     #toastTextEl
     #toastIconEl
-    #toastIconImgEl
+    #selectedIconEl
+    #iconName
+    #iconColor
+
 
   constructor(options) {
       this.#toastEl = document.createElement("div")
@@ -35,15 +38,19 @@ export default class Toast {
     if (!value || value === 'success') {
       this.#toastEl.classList.add('successful__toast')
       root.style.setProperty("--progress__color", "#3cba5f")
+      this.#iconName = 'check-circle'
     } else if (!value || value === 'information') {
       this.#toastEl.classList.add('information__toast')
       root.style.setProperty("--progress__color", "#006be1")
+      this.#iconName = 'info-circle'
     } else if (!value || value === 'warning') {
       this.#toastEl.classList.add('warning__toast')
       root.style.setProperty("--progress__color", "#ef9400")
+      this.#iconName = 'error'
     } else if (!value || value === 'error') {
       this.#toastEl.classList.add('error__toast')
       root.style.setProperty("--progress__color", "#ea4e2c")
+      this.#iconName = 'error'
     }
 } 
   
@@ -73,11 +80,20 @@ export default class Toast {
 
     this.#toastEl.append(this.#toastIconEl, this.#toastTextEl)
 
+    /*
     this.#toastIconImgEl = document.createElement('div')
     this.#toastIconImgEl.classList.add('toast_iconel_img')
+    */
 
+    this.#selectedIconEl = document.createElement('box-icon')
+    this.#selectedIconEl.setAttribute('name', `${this.#iconName}`)
+    this.#selectedIconEl.setAttribute('color', `white`)
+    this.#selectedIconEl.setAttribute('type', 'solid')
+    this.#selectedIconEl.setAttribute('size', 'sm')
+    this.#toastIconEl.append(this.#selectedIconEl)
+    /*
     this.#toastIconEl.append(this.#toastIconImgEl)
-
+    */
     this.#toastTextEl.textContent = value
   }
 
