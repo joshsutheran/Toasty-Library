@@ -2,12 +2,13 @@ let root = document.documentElement
 
 // Create exported class called Toast.
 const DEFAULT_OPTIONS = {
-    autoClose: 500000,
+    autoClose: 5000,
     position: 'top-right',
     onClose: () => {},
     canClose: true,
     showProgress: true,
-    type: 'error'
+    type: 'warning',
+    text: "This text can be changed!"
 }
 
 export default class Toast {
