@@ -23,6 +23,7 @@
     color: #333c48;
     border-radius: 10px;
     box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    z-index: 10;
 }
 
 .toast__iconEl {
