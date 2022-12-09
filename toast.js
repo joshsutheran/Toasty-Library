@@ -1,6 +1,7 @@
 let root = document.documentElement
 
-// Create exported class called Toast.
+console.log('hello!')
+
 const DEFAULT_OPTIONS = {
     autoClose: 5000,
     position: 'top-right',
@@ -11,7 +12,7 @@ const DEFAULT_OPTIONS = {
     text: "This text can be changed!"
 }
 
-export default class Toast {
+class Toast {
     #toastEl
     #removeBinded
     #progressInterval
