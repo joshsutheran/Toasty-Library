@@ -1,7 +1,5 @@
 let root = document.documentElement
 
-console.log('hello!')
-
 const DEFAULT_OPTIONS = {
     autoClose: 5000,
     position: 'top-right',
