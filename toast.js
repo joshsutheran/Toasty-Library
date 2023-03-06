@@ -41,15 +41,15 @@ class Toast {
       this.#iconName = 'check-circle'
     } else if (!value || value === 'information') {
       this.#toastEl.classList.add('information__toast')
-      root.style.setProperty("--progress__color", "#006be1")
+      this.#toastIconEl.classList.add('information_toast_icon')
       this.#iconName = 'info-circle'
     } else if (!value || value === 'warning') {
       this.#toastEl.classList.add('warning__toast')
-      root.style.setProperty("--progress__color", "#ef9400")
+      this.#toastIconEl.classList.add('warning_toast_icon')
       this.#iconName = 'error'
     } else if (!value || value === 'error') {
       this.#toastEl.classList.add('error__toast')
-      root.style.setProperty("--progress__color", "#ea4e2c")
+      this.#toastIconEl.classList.add('error_toast_icon')
       this.#iconName = 'error'
     }
 } 
