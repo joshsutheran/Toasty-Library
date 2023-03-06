@@ -6,7 +6,7 @@ const DEFAULT_OPTIONS = {
     onClose: () => {},
     canClose: true,
     showProgress: true,
-    type: 'warning',
+    type: 'success',
     text: "This text can be changed!"
 }
 
@@ -37,7 +37,7 @@ class Toast {
   set type(value) {
     if (!value || value === 'success') {
       this.#toastEl.classList.add('successful__toast')
-      root.style.setProperty("--progress__color", "#3cba5f")
+        this.#toast__iconEl.classList.add('successful_toast_icon')
       this.#iconName = 'check-circle'
     } else if (!value || value === 'information') {
       this.#toastEl.classList.add('information__toast')
@@ -79,21 +79,14 @@ class Toast {
     this.#toastTextEl.classList.add('toast__textEl')
 
     this.#toastEl.append(this.#toastIconEl, this.#toastTextEl)
-
-    /*
-    this.#toastIconImgEl = document.createElement('div')
-    this.#toastIconImgEl.classList.add('toast_iconel_img')
-    */
-
+      
     this.#selectedIconEl = document.createElement('box-icon')
     this.#selectedIconEl.setAttribute('name', `${this.#iconName}`)
     this.#selectedIconEl.setAttribute('color', `white`)
     this.#selectedIconEl.setAttribute('type', 'solid')
     this.#selectedIconEl.setAttribute('size', 'sm')
     this.#toastIconEl.append(this.#selectedIconEl)
-    /*
-    this.#toastIconEl.append(this.#toastIconImgEl)
-    */
+
     this.#toastTextEl.textContent = value
   }
 
