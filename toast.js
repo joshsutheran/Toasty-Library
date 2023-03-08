@@ -38,8 +38,8 @@ class Toast {
     if (!value || value === 'success') {
       this.#toastEl.classList.add('successful__toast')
       this.#toastIconEl = document.createElement('div')
-      this.#toastIconEl.classList.add('successful_toast_icon')
       this.#toastIconEl.classList.add('toast__iconEl')
+      this.#toastIconEl.classList.add('successful_toast_icon')
       this.#iconName = 'check-circle'
     } else if (!value || value === 'information') {
       this.#toastEl.classList.add('information__toast')
