@@ -141,22 +141,22 @@
 */
 
 /* SUCCESS */
-.successful__toast {
+.successful_toast_icon {
     background-color: #ebf7ee;
     border-color: #bee5c8;
 }
 
-.information__toast {
+.information_toast_icon {
     background-color: #e5effa;
     border-color: #b4d2f2;
 }
 
-.warning__toast {
+.warning_toast_icon {
     background-color: #fef7ea;
     border-color: #fae0b4;
 }
 
-.error__toast {
+.error_toast_icon {
     background-color: #fcedea;
     border-color: #f5c5bb;
 }
