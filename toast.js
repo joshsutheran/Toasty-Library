@@ -39,6 +39,7 @@ export default class Toast {
     if (!value || value === 'success') {
       this.#toastEl.classList.add('successful__toast')
       this.#toastIconEl.classList.add('successful_toast_icon')
+      this.#toastIconEl.classList.add('toast__iconEl')
       //root.style.setProperty("--progress__color", "#3cba5f")
       this.#iconName = 'check-circle'
     } else if (!value || value === 'information') {
