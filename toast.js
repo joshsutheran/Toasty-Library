@@ -39,23 +39,18 @@ export default class Toast {
     if (!value || value === 'success') {
       this.#toastEl.classList.add('successful__toast')
       this.#toastIconEl.classList.add('successful_toast_icon')
-      this.#toastIconEl.classList.add('toast__iconEl')
-      //root.style.setProperty("--progress__color", "#3cba5f")
       this.#iconName = 'check-circle'
     } else if (!value || value === 'information') {
       this.#toastEl.classList.add('information__toast')
       this.#toastIconEl.classList.add('information_toast_icon')
-      //root.style.setProperty("--progress__color", "#006be1")
       this.#iconName = 'info-circle'
     } else if (!value || value === 'warning') {
       this.#toastEl.classList.add('warning__toast')
       this.#toastIconEl.classList.add('warning_toast_icon')
-      //root.style.setProperty("--progress__color", "#ef9400")
       this.#iconName = 'error'
     } else if (!value || value === 'error') {
       this.#toastEl.classList.add('error__toast')
       this.#toastIconEl.classList.add('error_toast_icon')
-      //root.style.setProperty("--progress__color", "#ea4e2c")
       this.#iconName = 'error'
     }
 } 
