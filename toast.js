@@ -8,7 +8,7 @@ const DEFAULT_OPTIONS = {
     type: 'warning'
 }
 
-export default class Toast {
+class Toast {
     #toastEl
     #removeBinded
     #progressInterval
